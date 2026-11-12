@@ -1,0 +1,532 @@
+:root {
+  color-scheme: light;
+  --ink: #19332d;
+  --muted: #78827b;
+  --green: #245c4b;
+  --green-dark: #102b26;
+  --mint: #e3efe7;
+  --paper: #f7f8f4;
+  --line: #e8ebe5;
+  --gold: #c28b4b;
+  font-family: "DM Sans", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 2% 25%, rgba(226, 238, 228, 0.55), transparent 34rem),
+    var(--paper);
+  color: var(--ink);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button,
+select {
+  cursor: pointer;
+}
+
+.page-shell {
+  width: min(1180px, calc(100% - 64px));
+  margin: 0 auto;
+}
+
+.topbar {
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(25, 51, 45, 0.08);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: grid;
+  width: 31px;
+  height: 31px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--green);
+  color: #f3ead4;
+  font-size: 17px;
+}
+
+.brand-light {
+  color: #839087;
+  font-weight: 400;
+}
+
+.topbar-note {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.location-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid #dfe5df;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 600;
+  transition: background 160ms ease, border-color 160ms ease;
+}
+
+.location-button:hover {
+  border-color: #b6c8bc;
+  background: white;
+}
+
+.location-button span:first-child {
+  font-size: 17px;
+  line-height: 12px;
+}
+
+.intro {
+  padding: 57px 0 35px;
+  text-align: center;
+}
+
+.eyebrow,
+.section-label,
+.next-label {
+  margin: 0;
+  color: #74857b;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.65px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.eyebrow-line {
+  width: 24px;
+  height: 1px;
+  background: #a4b5a8;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin: 15px 0 10px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(36px, 5vw, 52px);
+  font-weight: 600;
+  letter-spacing: -1.6px;
+  line-height: 1.16;
+}
+
+h1 em {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.intro-copy {
+  margin-bottom: 0;
+  color: #78827b;
+  font-size: 14px;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  align-items: stretch;
+  gap: 20px;
+}
+
+.panel {
+  min-width: 0;
+  border: 1px solid rgba(25, 51, 45, 0.07);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 14px 40px rgba(32, 54, 43, 0.045);
+}
+
+.prayer-panel {
+  padding: 25px 27px 19px;
+}
+
+.panel-heading,
+.map-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.panel h2,
+.map-heading h2 {
+  margin: 7px 0 5px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: -0.4px;
+}
+
+.hijri-line,
+.location-line {
+  margin: 4px 0 0;
+  color: #78827b;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.location-line {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.date-line {
+  margin: 6px 0 0;
+  color: #66746b;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.prayer-list[hidden],
+.next-prayer[hidden] {
+  display: none;
+}
+
+.next-prayer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 21px 0 13px;
+  padding: 13px 15px;
+  border: 1px solid #e6efe7;
+  border-radius: 9px;
+  background: linear-gradient(110deg, #f1f7f1, #f8faf5);
+}
+
+.next-icon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: #e1eee4;
+  color: #55795e;
+  font-size: 18px;
+}
+
+.next-copy {
+  display: grid;
+  gap: 3px;
+}
+
+.next-label {
+  font-size: 8px;
+  letter-spacing: 1.1px;
+}
+
+.next-copy strong {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 17px;
+}
+
+.next-time {
+  display: grid;
+  gap: 2px;
+  margin-left: auto;
+  text-align: right;
+}
+
+.next-time strong {
+  color: var(--green);
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.4px;
+}
+
+.next-time span {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.prayer-list {
+  display: grid;
+}
+
+.prayer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 41px;
+  border-bottom: 1px solid #eff1ed;
+  color: #59665d;
+  font-size: 12px;
+}
+
+.prayer-row:last-child {
+  border-bottom: 0;
+}
+
+.prayer-row strong {
+  color: #35483c;
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.prayer-row.is-next {
+  color: var(--green);
+  font-weight: 700;
+}
+
+.prayer-row.is-next strong {
+  color: var(--green);
+}
+
+.source-note {
+  margin: 10px 0 0;
+  color: #9aa39c;
+  font-size: 10px;
+}
+
+.loading-state {
+  padding: 19px 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.map-panel {
+  padding: 25px 25px 14px;
+}
+
+.map-heading {
+  align-items: center;
+}
+
+.map-pin {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 50%;
+  background: #edf4ee;
+  color: var(--green);
+  font-size: 21px;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  height: 41px;
+  margin: 16px 0 8px;
+  padding-left: 11px;
+  border: 1px solid #e4e9e3;
+  border-radius: 7px;
+  background: #fff;
+}
+
+.search-icon {
+  color: #8d9990;
+  font-size: 19px;
+  line-height: 0;
+}
+
+.search-form input {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  padding: 0 9px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 11px;
+}
+
+.search-form input::placeholder {
+  color: #a4aca5;
+}
+
+.search-form button {
+  height: 29px;
+  margin-right: 5px;
+  padding: 0 11px;
+  border: 0;
+  border-radius: 5px;
+  background: var(--green);
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.search-form button:hover {
+  background: #194b3d;
+}
+
+.map-hint {
+  min-height: 14px;
+  margin-bottom: 9px;
+  color: #879188;
+  font-size: 10px;
+}
+
+#map {
+  height: 326px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #e9eee8;
+}
+
+.map-attribution {
+  margin: 9px 0 0;
+  color: #9aa39c;
+  font-size: 9px;
+  text-align: right;
+}
+
+.map-attribution a {
+  color: #718078;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 2px 27px;
+  color: #929b93;
+  font-size: 10px;
+}
+
+.toast {
+  position: fixed;
+  z-index: 1000;
+  right: 24px;
+  bottom: 22px;
+  max-width: min(380px, calc(100vw - 48px));
+  padding: 12px 15px;
+  transform: translateY(14px);
+  border: 1px solid #e6ebe5;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 8px 26px rgba(24, 45, 35, 0.12);
+  color: #45554a;
+  font-size: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.toast.is-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 850px) {
+  .page-shell {
+    width: min(700px, calc(100% - 40px));
+  }
+
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar-note {
+    display: none;
+  }
+
+  #map {
+    height: 310px;
+  }
+}
+
+@media (max-width: 520px) {
+  .page-shell {
+    width: calc(100% - 28px);
+  }
+
+  .topbar {
+    height: 70px;
+  }
+
+  .brand {
+    font-size: 17px;
+  }
+
+  .location-button {
+    padding: 9px 10px;
+    font-size: 10px;
+  }
+
+  .intro {
+    padding: 43px 0 27px;
+  }
+
+  .intro-copy {
+    max-width: 310px;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .prayer-panel,
+  .map-panel {
+    padding: 20px 17px 15px;
+  }
+
+  .panel h2,
+  .map-heading h2 {
+    font-size: 21px;
+  }
+
+  .panel-heading {
+    gap: 8px;
+  }
+
+  #map {
+    height: 275px;
+  }
+
+  footer {
+    flex-direction: column;
+    gap: 7px;
+  }
+}

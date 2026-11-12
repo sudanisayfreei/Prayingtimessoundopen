@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#102b26" />
+    <title>Prayer Times — Find your daily rhythm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+      defer
+    ></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Prayer Times home">
+          <span class="brand-mark" aria-hidden="true">✦</span>
+          <span>noor<span class="brand-light">.times</span></span>
+        </a>
+        <span class="topbar-note">A little space for your daily rhythm</span>
+        <button class="location-button" id="locate-button" type="button">
+          <span aria-hidden="true">⌖</span>
+          <span>Location automatically</span>
+        </button>
+      </header>
+
+      <main>
+        <section class="intro">
+          <p class="eyebrow"><span class="eyebrow-line"></span> YOUR DAY, IN BALANCE</p>
+          <h1>Make room for <em>what matters.</em></h1>
+          <p class="intro-copy">
+            Prayer times for wherever life finds you. Choose a place on the map or search for a city.
+          </p>
+        </section>
+
+        <section class="dashboard" aria-label="Prayer times and location">
+          <div class="prayer-panel panel">
+            <div class="panel-heading">
+              <div>
+                <p class="section-label">TODAY’S SCHEDULE</p>
+                <h2>Prayer Times</h2>
+                <p class="date-line" id="date-line">Loading today’s date</p>
+                <p class="hijri-line" id="hijri-line"></p>
+                <p class="location-line" id="location-name">Finding your place…</p>
+              </div>
+            </div>
+
+            <div class="next-prayer" id="next-prayer">
+              <div class="next-icon" aria-hidden="true">☼</div>
+              <div class="next-copy">
+                <span class="next-label">UP NEXT</span>
+                <strong id="next-name">—</strong>
+              </div>
+              <div class="next-time">
+                <strong id="countdown">--:--:--</strong>
+                <span id="next-time-label">remaining</span>
+              </div>
+            </div>
+
+            <div class="prayer-list" id="prayer-list" aria-live="polite">
+              <div class="loading-state">Loading prayer times…</div>
+            </div>
+            <p class="source-note">Prayer times provided by AlAdhan</p>
+          </div>
+
+          <div class="map-panel panel">
+            <div class="map-heading">
+              <div>
+                <p class="section-label">YOUR LOCATION</p>
+                <h2>Find your place</h2>
+              </div>
+              <span class="map-pin" aria-hidden="true">⌖</span>
+            </div>
+            <form class="search-form" id="search-form">
+              <label class="visually-hidden" for="city-search">Search for a city or address</label>
+              <span class="search-icon" aria-hidden="true">⌕</span>
+              <input
+                id="city-search"
+                name="q"
+                type="search"
+                placeholder="Search a city or address"
+                autocomplete="off"
+              />
+              <button type="submit" aria-label="Search">Search</button>
+            </form>
+            <p class="map-hint" id="map-hint">Search a place or click anywhere on the map.</p>
+            <div id="map" role="application" aria-label="Map to select your location"></div>
+            <p class="map-attribution">Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap contributors</a></p>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <span>Made for a more mindful day.</span>
+        <span>Times adjust to your selected location.</span>
+      </footer>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </div>
+  </body>
+</html>

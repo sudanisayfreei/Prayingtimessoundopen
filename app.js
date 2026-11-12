@@ -16,6 +16,7 @@ const DEFAULT_LOCATION = {
 };
 const CALCULATION_METHOD = 3;
 const LOCATION_UPDATE_THRESHOLD_METERS = 250;
+const MAX_GPS_ACCURACY_METERS = 500;
 
 const elements = {
   locationName: document.querySelector("#location-name"),
@@ -329,7 +330,7 @@ async function chooseLocation(location, lookupName = false, trackingUpdate = fal
   setMapLocation(location);
   const coordinates = `${location.latitude.toFixed(4)}, ${location.longitude.toFixed(4)}`;
   elements.mapHint.textContent = trackingUpdate
-    ? `Auto-updating location · ${coordinates}`
+    ? `Auto-updating location · accuracy ±${Math.round(location.accuracy)} m · ${coordinates}`
     : coordinates;
   void loadPrayerTimes(location);
 
@@ -368,7 +369,7 @@ async function searchLocation(event) {
   elements.mapHint.textContent = "Searching OpenStreetMap…";
   const url = new URL("https://nominatim.openstreetmap.org/search");
   url.searchParams.set("format", "jsonv2");
-  url.searchParams.set("limit", "1");
+  url.searchParams.set("limit", "10");
   url.searchParams.set("addressdetails", "1");
   url.searchParams.set("q", query);
 
@@ -377,13 +378,13 @@ async function searchLocation(event) {
     if (!response.ok) throw new Error(`Location service returned ${response.status}`);
     const results = await response.json();
     if (requestId !== searchRequest) return;
-    if (!results.length) {
+    const result = results[0];
+    if (!result) {
       elements.mapHint.textContent = "No matching place found.";
       showMessage("No matching place found. Try a nearby city or a more specific address.");
       return;
     }
 
-    const result = results[0];
     const latitude = Number(result.lat);
     const longitude = Number(result.lon);
     if (!Number.isFinite(latitude) || !Number.isFinite(longitude)
@@ -440,6 +441,14 @@ function useDeviceLocation(automatic = false) {
           elements.mapHint.textContent = "Your browser returned invalid coordinates. Choose a place on the map or search instead.";
           return;
         }
+        if (!Number.isFinite(coords.accuracy) || coords.accuracy > MAX_GPS_ACCURACY_METERS) {
+          const accuracy = Number.isFinite(coords.accuracy)
+            ? `±${Math.round(coords.accuracy)} m`
+            : "unknown";
+          elements.mapHint.textContent = `GPS accuracy is ${accuracy}; waiting for a more accurate reading.`;
+          return;
+        }
+        location.accuracy = coords.accuracy;
         if (!firstUpdate
           && distanceInMeters(activeLocation, location) < LOCATION_UPDATE_THRESHOLD_METERS) return;
         const lookupName = firstUpdate;
@@ -462,7 +471,7 @@ function useDeviceLocation(automatic = false) {
           locationWatchId = undefined;
         }
       },
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 30000 },
+      { enableHighAccuracy: true, timeout: 30000, maximumAge: 0 },
     );
   } catch (error) {
     locationWatchId = undefined;

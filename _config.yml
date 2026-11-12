@@ -1,0 +1,13 @@
+title: Noor Times
+email: ""
+description: >-
+  A lightweight prayer times dashboard that helps you follow daily prayer times.
+baseurl: ""
+url: ""
+markdown: kramdown
+permalink: pretty
+exclude:
+  - .gitignore
+  - README.md
+  - .jekyll-cache
+  - _site
